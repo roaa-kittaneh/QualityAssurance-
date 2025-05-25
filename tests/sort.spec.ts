@@ -1,16 +1,23 @@
+/**
+ * sort.spec.ts
+ * Tests sorting items:
+ * - By name (A-Z)
+ * - By price (High to Low)
+ */
+
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
+import { LoginPage } from '../pages/loginPage';
+import { InventoryPage } from '../pages/sortPage';
 import * as dotenv from 'dotenv';
 import path from 'path';
 
-// تحميل ملف .env
+// Load the .env file
 dotenv.config({ path: path.resolve(__dirname, '..', '.env') });
 
 const username = process.env.SAUCE_USERNAME;
 const password = process.env.SAUCE_PASSWORD;
 
-// تحقق من وجود بيانات تسجيل الدخول
+// Check if login credentials exist
 if (!username || !password) {
   throw new Error('Username or password not defined in .env file');
 }
@@ -19,16 +26,16 @@ test.describe('Sort Feature', () => {
   let loginPage: LoginPage;
   let inventoryPage: InventoryPage;
 
-  // Hook قبل كل اختبار لتسجيل الدخول
+  // Hook before each test to login
   test.beforeEach(async ({ page }) => {
     loginPage = new LoginPage(page);
     inventoryPage = new InventoryPage(page);
 
-    // الانتقال إلى الصفحة الرئيسية وتسجيل الدخول
+    // Navigate to the main page and login
     await loginPage.goto();
     await loginPage.login(username, password);
 
-    // تحقق من أن صفحة المخزون جاهزة
+    // Verify the inventory page is loaded
     await inventoryPage.expectInventoryPageLoaded();
   });
 
@@ -36,7 +43,7 @@ test.describe('Sort Feature', () => {
     await inventoryPage.sortItems('az');
     const itemNames = await inventoryPage.getItemNames();
 
-    // تحقق من أن الأسماء مرتبة تصاعديًا
+    // Verify that names are sorted ascending
     const sortedItemNames = [...itemNames].sort();
     expect(itemNames).toEqual(sortedItemNames);
   });
@@ -45,7 +52,7 @@ test.describe('Sort Feature', () => {
     await inventoryPage.sortItems('za');
     const itemNames = await inventoryPage.getItemNames();
 
-    // تحقق من أن الأسماء مرتبة تنازليًا
+    // Verify that names are sorted descending
     const sortedItemNames = [...itemNames].sort().reverse();
     expect(itemNames).toEqual(sortedItemNames);
   });
@@ -54,7 +61,7 @@ test.describe('Sort Feature', () => {
     await inventoryPage.sortItems('lohi');
     const itemPrices = await inventoryPage.getItemPrices();
 
-    // تحقق من أن الأسعار مرتبة تصاعديًا
+    // Verify that prices are sorted ascending
     const sortedItemPrices = [...itemPrices].sort((a, b) => a - b);
     expect(itemPrices).toEqual(sortedItemPrices);
   });
@@ -63,7 +70,7 @@ test.describe('Sort Feature', () => {
     await inventoryPage.sortItems('hilo');
     const itemPrices = await inventoryPage.getItemPrices();
 
-    // تحقق من أن الأسعار مرتبة تنازليًا
+    // Verify that prices are sorted descending
     const sortedItemPrices = [...itemPrices].sort((a, b) => b - a);
     expect(itemPrices).toEqual(sortedItemPrices);
   });

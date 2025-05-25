@@ -1,6 +1,13 @@
+/**
+ * login.spec.ts
+ * Tests login functionality:
+ * - Valid and invalid logins
+ * - Error messages
+ */
+
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
+import { LoginPage } from '../pages/loginPage';
+import { InventoryPage } from '../pages/sortPage';
 import * as dotenv from 'dotenv';
 import path from 'path';
 

@@ -1,10 +1,16 @@
+/**
+ * checkout.spec.ts
+ * Tests full checkout flow:
+ * - Adding items, filling form, completing order
+ */
+
 import { test, expect } from '@playwright/test';
-import { LoginPage } from '../pages/LoginPage';
-import { InventoryPage } from '../pages/InventoryPage';
+import { LoginPage } from '../pages/loginPage';
+import { InventoryPage } from '../pages/sortPage';
 import { CartPage } from '../pages/CartPage';
-import { CheckoutStepOnePage } from '../pages/CheckoutStepOnePage';
-import { CheckoutStepTwoPage } from '../pages/CheckoutStepTwoPage';
-import { CheckoutCompletePage } from '../pages/CheckoutCompletePage';
+import { CheckoutStepOnePage } from '../pages/checkoutStepOnePage';
+import { CheckoutStepTwoPage } from '../pages/checkoutStepTwoPage';
+import { CheckoutCompletePage } from '../pages/checkoutCompletePage';
 import * as dotenv from 'dotenv';
 import path from 'path';
 
