@@ -6,7 +6,7 @@
 
 import { test, expect } from '@playwright/test';
 import { LoginPage } from '../pages/loginPage';
-import { InventoryPage } from '../pages/sortPage';
+import { InventoryPage } from '../pages/inventoryPage';
 import { CartPage } from '../pages/CartPage'; // Import CartPage
 import * as dotenv from 'dotenv';
 import path from 'path';
